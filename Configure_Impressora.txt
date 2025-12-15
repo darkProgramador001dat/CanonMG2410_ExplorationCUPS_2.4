@@ -1,0 +1,21 @@
+Se o CUPS “perder” a impressora (raro, mas acontece)
+Remova e adicione de novo:
+
+sudo lpadmin -x MG2410
+
+
+Depois reconfigure (USB):
+sudo lpadmin \
+  -p MG2410 \
+  -E \
+  -v usb://Canon/MG2410 \
+  -m everywhere
+
+
+Se quiser confirmar o URI correto:
+lpinfo -v
+
+Dica importante (evita problemas no futuro)
+Configure o CUPS para não desabilitar a impressora automaticamente quando ela desligar:
+
+sudo lpadmin -p MG2410 -o printer-error-policy=retry-job
