@@ -1,0 +1,16 @@
+[Manual PENTESTER]
+
+CUPS 2.4.7
+
+Ao utilizar o nmap -sV localhost me deparei com um protocolo desconhecido com o nome e porta:
+631 - CUPS 2.4
+CUPS(Sistema Comum de Impressão Unix) Esse é um sistema padrão de impressão para linux.
+O CUPS suporta uma aplicação web podendo ser acessado pelo localhost:631 e pelo Terminal.
+Apartir dai podemos realizar testes de exploração. Em meu caso vamos explorar a impressora
+CanonMG2410, sendo necessario instalar os drivers da impressora.
+
+Para iniciar começamos, instalar o CUPS apt install libcups2-dev ou verificar se já contém em seus sistema Linux
+cups-config --version 
+
+
+
