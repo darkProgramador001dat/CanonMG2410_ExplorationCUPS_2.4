@@ -6,6 +6,10 @@ Como utilizar uma impressora CanonMG2400/2410 pelo Terminal(CLi).
 1. Precisamos instalar o CUPS em nosso sistema linux ubuntu 24.04 e logo depois encontrar e baixar os drivers da impressora.
 Para cada impressora existe 1(um) Driver correto, o Driver do repositório corresponde a impressora Canon MG2410
 
+apt install cups
+apt install libcups2-dev
+apt install cups-daemon
+
 
 Vamos começar removendo a impressora completamente: Para aqueles que querem começar do Zero.
 lpadmin -x <Nome da impressora>
