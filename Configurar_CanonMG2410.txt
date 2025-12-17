@@ -1,0 +1,67 @@
+[Manual BACKEND] para CUPS 2.4 porta 631
+
+Como configurar 1(uma) impressora CanonMG2400/MG2410 no terminal utilizando o protocolo CUPS 2.4
+Como utilizar uma impressora CanonMG2400/2410 pelo Terminal(CLi).
+
+1. Precisamos instalar o CUPS em nosso sistema linux ubuntu 24.04 e logo depois encontrar e baixar os drivers da impressora.
+Para cada impressora existe 1(um) Driver correto, o Driver do repositório corresponde a impressora Canon MG2410
+
+
+Vamos começar removendo a impressora completamente: Para aqueles que querem começar do Zero.
+lpadmin -x <Nome da impressora>
+
+Verificar se existe 1(uma) impressora configurada e pronta para uso:
+lpstat -p
+
+Limpar filas, caches e configurações antigas do CUPS, primeiro pare o CUPS
+systemctl stop cups ou systemctl daemon-reload
+
+Apagar configurações dos repositorios:
+rm -rf /etc/cups/printers.conf
+rm -rf /etc/cups/ppd/MG2410.ppd
+rm -rf /var/spool/cups/*
+rm -rf /var/cache/cups/*
+
+
+
+oOo... Vamos iniciar o CUPS e configurar a impressora ...oOo
+
+systemctl start cups
+
+Verificar os aparelhos conectados ao computador via USB
+lsusb
+
+Encontre o nome da impressora, devera aparecer um linha:
+Bus  001  Device  010: ID 04a9:076c Canon, Inc. MG2410 series
+
+Agora faça a instalação dos Drivers, do nosso repositório:
+dpkg -i *
+./install.sh
+
+Verifique se os drivers existem: dpkg -l | grep cnij Se existir verá algo assim:
+ii cnijfilter-common  4.00-1  amd64  IJ Printer Driver for linux.
+ii cnijfilter-mg2400series  4.00-1  amd64  IJ Printer Driver for linux.
+
+Adicionar a impressonar no CUPS
+lpinfo -v
+
+deverá aparecer algo como: direct usb://Canon/MG2410%20series?serial=1F4ED8&interface=1
+Vamos criar a impressora:
+lpadmin \
+> -p MG2410 \
+> -E \
+> -v usb://Canon/MG2410%20series \
+> -m canonmg2400.ppd
+
+Vamos definir a impressora padrão do sistema:
+lpoptions -d MG2410
+
+Reiniciar e válidar: systemctl restart cups
+
+Verifique se está ociasa!
+lpstart -p
+
+
+Dicas para melhor manuseio: Se você estiver mais de 1(uma) impressora configurada no sistema, e quer utilizar apenas 1(uma)
+cupsenable <Nome da impressora>
+cupsaccept <Nome da impressora>
