@@ -38,7 +38,7 @@ lsusb
 Encontre o nome da impressora, devera aparecer um linha:
 Bus  001  Device  010: ID 04a9:076c Canon, Inc. MG2410 series
 
-Agora faça a instalação dos Drivers, do nosso repositório:
+Agora faça a instalação dos Drivers, do nosso repositório: cnijfilter-mg2400series-4.00-1-deb.tar.gz
 dpkg -i *
 ./install.sh
 
