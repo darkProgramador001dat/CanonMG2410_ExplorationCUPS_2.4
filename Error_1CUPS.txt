@@ -1,32 +1,25 @@
-[Manual PENTESTER possíveis erros]
+[Possíveis Erros]
 
-CUPS 2.4.7
-
-Ao utilizar o nmap -sV localhost me deparei com um protocolo desconhecido com o nome e porta:
-631 - CUPS 2.4
-CUPS(Sistema Comum de Impressão Unix) Esse é um sistema padrão de impressão para linux.
-O CUPS suporta uma aplicação web podendo ser acessado pelo localhost:631 e pelo Terminal.
-Apartir dai podemos realizar testes de exploração. Em meu caso vamos explorar a impressora
-CanonMG2410, sendo necessario instalar os drivers da impressora.
-
-Para iniciar começamos, instalar o CUPS apt install libcups2-dev, sudo apt install cups-daemon
-ou verificar se já contém em seus sistema Linux.
-cups-config --version, verificar se o CUPS está rodando sudo: systemctl enable --now cups
-
-1. 
-Comece dar permissão ao diretorio /var/spool/cups/tmp permissão para tudo: sudo chmod 1777 /var/spool/cups/tmp/
+Precisamos dar permissão ao diretorio /var/spool/cups/tmp permissão para super-usuario: sudo chmod 1777 /var/spool/cups/tmp/
 Logo em seguida verificar se está com todas as permissões: ls -ld /var/spool/cups/tmp/ 
-o resultado deverá ser: drwxrwxrwt 2 root lp 4096 dez 15 11:13 /var/spool/cups/tmp/ Isso precisa ser necessário.
-Utilize e systemctl restart cups e verifique se esses repositório continuara com a saída drwxrwxrwt, se não 
-procure e resolva isso: crie um script dentro do repositório nano /etc/init.d/fix_cups_permission.sh
+o resultado deverá ser: drwxrwxrwt 2 root lp 4096 dez 15 11:13 /var/spool/cups/tmp/ 
 
+Isso precisa ser necessário.
+
+Utilize e systemctl restart cups e verifique se esses repositório continuara com a saída drwxrwxrwt, se não 
+procure e resolva isso: 
+
+crie um script dentro do repositório nano /etc/init.d/fix_cups_permission.sh
 #!/bin/bash
 # Script para corrigir as permissões do diretorio /var/spool/cups/tmp
 chmod 1777 /var/spool/cups/tmp
 chown root:lp /var/spool/cups/tmp
 
 Isso vai garantir que as permissões sejam salvas, agora update-rc.d fix_cups_permissions.sh defaults
-e depois aa-status e depois systemctl restart cups, perceba que agora ficou permanente o drwxrwxrwt
+
+E depois aa-status e depois systemctl restart cups
+
+Perceba que agora ficou permanente para: drwxrwxrwt
 
 
 
