@@ -69,3 +69,6 @@ lpstart -p
 Dicas para melhor manuseio: Se você estiver mais de 1(uma) impressora configurada no sistema, e quer utilizar apenas 1(uma)
 cupsenable <Nome da impressora>
 cupsaccept <Nome da impressora>
+
+
+Verifique os LOGS enquando você há utiliza: tail -f /var/log/cups/error_log
